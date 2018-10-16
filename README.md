@@ -10,6 +10,19 @@ Small discord bot made for fun. This project is a work in progress.
   </li>
 </ul>
 <h2>Acknowledgements</h2>
+<ul>
+  <li>
+    <a href="https://discord.foxbot.me/docs/index.html">
+    Discord.Net Documentation
+    </a>
+    for helping this bot get started
+  </li>
+</ul>
 <p>
-  Stackoverflow community for providing great examples and solutions
+  and of course,
 </p>
+<ul>
+  <li>
+    The Stack Overflow community for providing great examples and solutions
+  </li>
+</ul>
