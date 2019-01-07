@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Audio;
 using Discord.Commands;
-using System; //oof
+using System;
 using Discord.WebSocket;
 using JackBot;
 using System.Timers;
@@ -107,7 +107,7 @@ namespace JackBot.Modules
         {
             var misc = new EmbedBuilder();
             misc.WithColor(0, 0, 255);
-            misc.WithFooter("JackBotV2 by KernelSanders");
+            misc.WithFooter("JackBotV2 by bufferogreflow");
             misc.WithTitle("Miscellaneous Commands");
             misc.AddInlineField("help", "Brings up help page");
             misc.AddInlineField("ping", "Ping me and ill ping you back, or specify a user with 'user' and ill ping the user.\nEx: jb!ping user KernelSanders");
@@ -116,15 +116,15 @@ namespace JackBot.Modules
             await Context.Channel.SendMessageAsync("", false, misc);
             var fun = new EmbedBuilder();
             fun.WithColor(255, 0, 255);
-            fun.WithFooter("JackBotV2 by KernelSanders");
+            fun.WithFooter("JackBotV2 by bufferogreflow");
             fun.WithTitle("Fun Commands");
-            fun.AddField("quote", "I'll type shit that we always say");
-            fun.AddInlineField("this is so sad", "Damn, this is sooo sad...");
+            fun.AddField("quote", "I'll type stuff that we always say");
+            fun.AddInlineField("this is so sad", "this is sooo sad...");
             fun.AddInlineField("redditspider ([*subreddit*] [*post count*])", "Queries specified subreddit for a user-defined amount of posts");
             await Context.Channel.SendMessageAsync("", false, fun);
             var admin = new EmbedBuilder();
             admin.WithColor(0, 255, 0);
-            admin.WithFooter("JackBotV2 by KernelSanders");
+            admin.WithFooter("JackBotV2 by bufferogreflow");
             admin.WithTitle("Administrative Commands");
             admin.AddField("removequote", "Removes a quote (bot owner & server only");
             admin.AddInlineField("purge", "Removes x amount of messages (server owner only)");
@@ -133,7 +133,7 @@ namespace JackBot.Modules
             await Context.Channel.SendMessageAsync("", false, admin);
             var audio = new EmbedBuilder();
             audio.WithColor(255, 0, 0);
-            audio.WithFooter("JackBotV2 by KernelSanders");
+            audio.WithFooter("JackBotV2 by bufferogreflow");
             audio.WithTitle("Audio Commands");
             audio.AddField("join", "I'll join whatever voice channel you are in");
             audio.AddInlineField("leave", "I'll leave the voice channel");
@@ -157,22 +157,9 @@ namespace JackBot.Modules
             }
         }
 
-        /* IMPORTANT
-        int halfMin = 30000; //Thirty sec is 30,000 ms
-        int min = 60000; //One min is 60,000 ms
-        int halfHour = 1800000; //30 min is 1.8M ms
-        int hour = 3600000; //One hour is 3.6M ms
-        int twoHours = 7200000; //Two hours is 7.2M ms
-        int threeHours = 10800000; //Three hours is 108M ms
-        int fourHours = 14400000; //Four hours is 144M ms
-        int fiveHours = 18000000; //Five hours is 180M ms
-        int sixHours = 21600000; //Six hours is 216M ms
-        */
-
         [Command("quote")]
         public async Task QuoteAsync()
         {
-            //await itjustworksAsync();
             quotes = listRead(quotes, "../quotes.txt");
             Random rnd = new Random();
 
@@ -201,44 +188,12 @@ namespace JackBot.Modules
             }
         }
 
-        [Command("wiki", RunMode = RunMode.Async)]
-        public async Task WikiCmd()
-        {
-            int Rc = GetRandomNumber(0, 256);
-            int Gc = GetRandomNumber(0, 256);
-            int Bc = GetRandomNumber(0, 256);
-            var embed = new EmbedBuilder();
-            embed.WithColor(Rc, Gc, Bc);
-            embed.WithCurrentTimestamp();
-            embed.WithImageUrl("https://en.wikipedia.org/wiki/Special:Random");
-            embed.WithTitle("The Big Test");
-            embed.WithDescription("oops");
-            await Context.Channel.SendMessageAsync("", false, embed);
-        }
-
         [Group("getinfo")]
         public class getinfo : ModuleBase<SocketCommandContext>
         {
             [Command("user", RunMode = RunMode.Async)]
             public async Task userInfo(SocketGuildUser user)
             {
-                //big problem here needs fixing: if any object returns null it breaks this command, ie. if user not in audio channel and user.VoiceState is used, it will return a null.
-                //trying to make it just replace the object with a string saying "error" so the command does not break
-                object infoWrapper(object thing)
-                {
-                    if (thing == null)
-                    {
-                        Console.WriteLine($"Got null for {thing}");
-                        thing = (string)thing;
-                        thing = "null";
-                        return thing;
-                    }
-                    else
-                    {
-                        return thing;
-                    }
-                }
-
                 var embed = new EmbedBuilder();
                 embed.WithColor(100, 100, 100);
                 embed.WithTitle(user.Username);
@@ -267,35 +222,14 @@ namespace JackBot.Modules
                 embed.AddInlineField("Server Creation Date", Context.Guild.CreatedAt);
                 embed.AddInlineField("Server Region", Context.Guild.VoiceRegionId);
                 embed.AddInlineField("Member Count", Context.Guild.MemberCount);
-                //embed.AddInlineField("Current Channels", Context.Guild.Channels.GetEnumerator());
-                //embed.AddInlineField("Current Server Emotes", Context.Guild.Emotes);
                 await Context.Channel.SendMessageAsync("", false, embed);
-                //await Context.Channel.SendMessageAsync(userList.GetValue(use);
-                string[] userList = new string[] { };
-                /*foreach (SocketGuildUser user in (Context.Guild.Users))
-                {
-                    int a = 0;
-                    Console.WriteLine(user.Username);
-                    userList[a].Insert(a, user.Username);
-                    a++;
-                    for (int i = 0; i < userList.Length; i++)
-                    {
-                        await Context.Channel.SendMessageAsync(userList[i]);
-                    }
-                }*/
             }
-        }
-
-        [Command("talk", RunMode = RunMode.Async)]
-        public async Task talkCmd(IUser user, string message)
-        {
-            await user.SendMessageAsync(message);
         }
 
         [Command("status", RunMode = RunMode.Async)]
         public static async Task statusCmd([Remainder]string status)
         {
-            await Task.Delay(90000);
+            //Allow users to change the game playing status
         }
 
     }

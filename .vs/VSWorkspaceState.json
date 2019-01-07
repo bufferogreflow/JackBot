@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Modules"
   ],
-  "SelectedNode": "\\obj",
+  "SelectedNode": "\\Modules\\Misc.cs",
   "PreviewInSolutionExplorer": false
 }

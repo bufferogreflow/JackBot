@@ -29,12 +29,8 @@ namespace JackBot.Modules
         [Command("sleep"), RequireOwner]
         public async Task SleepAsync(int duration)
         {
-            duration = duration * 1000; //Convert arg from seconds to milliseconds
+            duration = duration * 1000;
 
-            /*
-            Random randInt = new Random();
-            int timeBuffer = randInt.Next(times.Length);
-            */
             Misc.listRead(gnights, "../gnights.txt");
             Misc.listRead(awokes, "../awokes.txt");
 
@@ -61,7 +57,6 @@ namespace JackBot.Modules
         [Command("logoff"), RequireUserPermission(GuildPermission.Administrator), RequireOwner]
         public async Task LogoffAsync()
         {
-            //if (Context.User.Id == 242356192461062145 || Context.User.Id == 162797825682309121) // If the message author is me or Jack, carry on with the logoff
             Misc.listRead(goodbyes, "../goodbyes.txt");
 
             Random rnd1 = new Random();
@@ -105,8 +100,7 @@ namespace JackBot.Modules
             {
                 while (sequenceEnum.MoveNext())
                 {
-                    // Do something with sequenceEnum.Current.
-                    //await Context.Channel.SendMessageAsync(sequenceEnum.Current.ToString());
+
                     Console.WriteLine(sequenceEnum.Current);
                 }
             }

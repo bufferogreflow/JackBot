@@ -32,7 +32,7 @@ namespace JackBotV2.Modules
                 Console.WriteLine($"{post.Thumbnail}");
                 try
                 {
-                    posts.WithImageUrl(post.Thumbnail.AbsoluteUri); //Posts might not have a thumbnail, which breaks the whole bot for some reason. This works, let's leave it.
+                    posts.WithImageUrl(post.Thumbnail.AbsoluteUri); //Posts might not have a thumbnail, which breaks the whole bot for some reason.
                 }
                 catch (System.Exception)
                 {
@@ -69,10 +69,10 @@ namespace JackBotV2.Modules
             await Context.Channel.SendMessageAsync("Done.");
         }
 
-        [Command("redscrape", RunMode = RunMode.Async)] //Reddit web scrape command
+        [Command("redscrape", RunMode = RunMode.Async)]
         public async Task SpiderAsync(string subreddit, int amount, [Remainder]string word)
         {
-            while (!StaticVals.authenticated) //Just in case idk
+            while (!StaticVals.authenticated)
             {
                 Console.Write("Username: ");
                 var username = "JackBotV2";
@@ -112,17 +112,5 @@ namespace JackBotV2.Modules
                 return "";
             }
         }
-        //var comments = sub.Comments.Take(25);
-        //List<Comment> model = new List<Comment>();
-        /*foreach (var comment in comments)
-        {
-            if (comment.Body.ToLower().Contains("the"))
-            {
-                //ENEMY SPOTTED
-                Console.WriteLine($"{comment}");
-                //await Context.Channel.SendMessageAsync($"{comment}");
-                model.Add(comment);
-            }
-        }*/
     }
 }
