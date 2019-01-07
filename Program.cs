@@ -8,13 +8,20 @@ using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using RedditSharp;
+using System.Security.Authentication;
 
 namespace JackBot
 {
     class Program
     {
+        public static class StaticVals
+        {
+            public static Reddit reddit = null;
+            public static bool authenticated = false;
+        }
 
-        public static void Main(string[] args) 
+        public static void Main(string[] args)
             => new Program().RunBotAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient _client;
@@ -32,7 +39,7 @@ namespace JackBot
                 .AddSingleton(new AudioService())
                 .BuildServiceProvider();
 
-            string botToken = GetToken();
+            string botToken = GetToken("../token.txt");
 
             //event subs
             _client.Log += Log;
@@ -46,6 +53,25 @@ namespace JackBot
             await _client.StartAsync();
 
             Console.WriteLine(_client.LoginState);
+
+            Console.Write("Username: ");
+            var username = "JackBotV2";
+            Console.WriteLine($"{username}");
+            Console.Write("Password: ");
+            var password = JackBotV2.Modules.SlashS.GetLine("../redditpass.txt");
+            Console.WriteLine($"{password}");
+            try
+            {
+                Console.WriteLine("Logging into Reddit...");
+                StaticVals.reddit = new Reddit(username, password);
+                StaticVals.authenticated = StaticVals.reddit.User != null;
+                Console.WriteLine("Reddit logon successful!");
+            }
+            catch (AuthenticationException)
+            {
+                Console.WriteLine("Incorrect login for Reddit.");
+                StaticVals.authenticated = false;
+            }
 
             await Task.Delay(-1);
         }
@@ -84,17 +110,17 @@ namespace JackBot
                 {
                     Console.WriteLine(result.ErrorReason);
                     await context.Channel.SendMessageAsync(result.ErrorReason);
-                } 
+                }
             }
         }
 
-        static string GetToken()
+        static string GetToken(string path)
         {
             try
             {
-                using (StreamReader sr = new StreamReader("../token.txt"))
+                using (StreamReader sr = new StreamReader(path))
                 {
-                    Console.WriteLine("Getting token from token.txt");
+                    Console.WriteLine($"Getting token from {path} . . .");
                     string line = sr.ReadLine();
                     Console.WriteLine("Got: " + line);
                     return line;

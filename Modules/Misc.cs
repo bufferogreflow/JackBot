@@ -111,15 +111,22 @@ namespace JackBot.Modules
             misc.WithTitle("Miscellaneous Commands");
             misc.AddInlineField("help", "Brings up help page");
             misc.AddInlineField("ping", "Ping me and ill ping you back, or specify a user with 'user' and ill ping the user.\nEx: jb!ping user KernelSanders");
-            misc.AddInlineField("quote", "I'll type shit that we always say");
             misc.AddInlineField("addquote", "Adds a quote");
             misc.AddInlineField("getinfo (user *username* | server)", "Pulls info on specified object");
             await Context.Channel.SendMessageAsync("", false, misc);
+            var fun = new EmbedBuilder();
+            fun.WithColor(255, 0, 255);
+            fun.WithFooter("JackBotV2 by KernelSanders");
+            fun.WithTitle("Fun Commands");
+            fun.AddField("quote", "I'll type shit that we always say");
+            fun.AddInlineField("this is so sad", "Damn, this is sooo sad...");
+            fun.AddInlineField("redditspider ([*subreddit*] [*post count*])", "Queries specified subreddit for a user-defined amount of posts");
+            await Context.Channel.SendMessageAsync("", false, fun);
             var admin = new EmbedBuilder();
             admin.WithColor(0, 255, 0);
             admin.WithFooter("JackBotV2 by KernelSanders");
             admin.WithTitle("Administrative Commands");
-            admin.AddInlineField("removequote", "Removes a quote (bot owner & server only");
+            admin.AddField("removequote", "Removes a quote (bot owner & server only");
             admin.AddInlineField("purge", "Removes x amount of messages (server owner only)");
             admin.AddInlineField("logoff", "Logs me out (bot owner & server owner only)");
             admin.AddInlineField("sleep", "I take the big blink for x seconds (bot owner only)");
@@ -128,10 +135,9 @@ namespace JackBot.Modules
             audio.WithColor(255, 0, 0);
             audio.WithFooter("JackBotV2 by KernelSanders");
             audio.WithTitle("Audio Commands");
-            audio.AddInlineField("join", "I'll join whatever voice channel you are in");
+            audio.AddField("join", "I'll join whatever voice channel you are in");
             audio.AddInlineField("leave", "I'll leave the voice channel");
-            audio.AddInlineField("play", "Specify a file and I'll play it (dont use rn pls)");
-            audio.AddInlineField("this is so sad", "Damn, this is sooo sad...");
+            //audio.AddInlineField("play", "Specify a file and I'll play it (dont use rn pls)");
             await Context.Channel.SendMessageAsync("", false, audio);
         }
 
@@ -285,12 +291,12 @@ namespace JackBot.Modules
         {
             await user.SendMessageAsync(message);
         }
-        
+
         [Command("status", RunMode = RunMode.Async)]
         public static async Task statusCmd([Remainder]string status)
         {
             await Task.Delay(90000);
         }
-        
+
     }
 }

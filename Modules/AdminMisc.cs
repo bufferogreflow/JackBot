@@ -43,7 +43,7 @@ namespace JackBot.Modules
 
             Random rnd2 = new Random();
             int awokeBuffer = rnd2.Next(awokes.Count);
-            
+
             await ReplyAsync(gnights[gnightBuffer]);
 
             Console.WriteLine($"Waiting {duration} ms");
@@ -96,7 +96,7 @@ namespace JackBot.Modules
             }
         }
 
-        [Command("purge", RunMode = RunMode.Async), RequireUserPermission(GuildPermission.Administrator), RequireOwner, RequireBotPermission(ChannelPermission.ManageMessages)]
+        [Command("purge", RunMode = RunMode.Async), RequireOwner, RequireBotPermission(ChannelPermission.ManageMessages)]
         public async Task purgeCmd(int amount)
         {
             var items = await Context.Channel.GetMessagesAsync(amount + 1).Flatten();

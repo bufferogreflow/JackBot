@@ -37,7 +37,7 @@ namespace JackBot.Modules
         {
             await _service.JoinAudio(Context.Guild, (Context.User as IVoiceState).VoiceChannel);
         }
-        
+
         /*
         [Command("join")]
         public async Task JoinChannel(IVoiceChannel channel = null)
@@ -45,7 +45,6 @@ namespace JackBot.Modules
             // Get the audio channel
             channel = channel ?? (Context.Message.Author as IGuildUser)?.VoiceChannel;
             if (channel == null) { await Context.Channel.SendMessageAsync("User must be in a voice channel, or a voice channel must be passed as an argument."); return; }
-
             // For the next step with transmitting audio, you would want to pass this Audio Client in to a service.
             var audioClient = await channel.ConnectAsync();
         }
@@ -81,7 +80,7 @@ namespace JackBot.Modules
             await _service.SendAudioAsync(Context.Guild, Context.Channel, memeSong);
             await _service.LeaveAudio(Context.Guild);
         }
-        
+
         [Command("my nuts itch", RunMode = RunMode.Async)]
         public async Task itchCmd()
         {
