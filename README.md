@@ -9,6 +9,14 @@ Small discord bot made for fun. This project is a work in progress.
     - .Net wrapper for Discord API by RogueException
   </li>
 </ul>
+<ul>
+  <li>
+    <a href="https://github.com/CrustyJew/RedditSharp">
+      RedditSharp
+    </a>
+    - Reddit API wrapper for .NET
+  </li>
+</ul>
 <h2>Acknowledgements</h2>
 <ul>
   <li>
