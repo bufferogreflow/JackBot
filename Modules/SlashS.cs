@@ -27,7 +27,7 @@ namespace JackBotV2.Modules
             {
                 var posts = new EmbedBuilder();
                 posts.WithColor(255, 65, 0);
-                posts.WithFooter("JackBotV2 by KernelSanders");
+                posts.WithFooter("JackBotV2 by bufferogreflow");
                 posts.AddInlineField($"{post.Author}", $"{post.Title}\n{post.Upvotes} upvotes | {post.Downvotes} downvotes");
                 Console.WriteLine($"{post.Thumbnail}");
                 try
@@ -46,19 +46,20 @@ namespace JackBotV2.Modules
         {
             var sub = StaticVals.reddit.GetSubreddit(subreddit);
             await Context.Channel.SendMessageAsync($"Looking for comments containing: {word}");
+            ushort counter = 0;
             try
             {
-                int counter;
                 foreach (var post in sub.Comments.Take(amount))
                 {
                     if (post.Body.ToLower().Contains(word))
                     {
                         var posts = new EmbedBuilder();
                         posts.WithColor(255, 65, 0);
-                        posts.WithFooter("JackBotV2 by KernelSanders");
+                        posts.WithFooter("JackBotV2 by bufferogreflow");
                         posts.AddInlineField($"{post.AuthorName}", $"{post.Body}\n{post.Upvotes} upvotes | {post.Downvotes} downvotes");
-                        Console.WriteLine($"{post}");
+                        Console.WriteLine($"{post.Body}");
                         await Context.Channel.SendMessageAsync("", false, posts);
+                        counter++;
                     }
                 }
             }
@@ -66,7 +67,7 @@ namespace JackBotV2.Modules
             {
                 Console.WriteLine(e.Message);
             }
-            await Context.Channel.SendMessageAsync("Done.");
+            await Context.Channel.SendMessageAsync($"Found {counter} results out of {amount} posts");
         }
 
         [Command("redscrape", RunMode = RunMode.Async)]
