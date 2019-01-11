@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Audio;
 
+// Based off of foxbot's Discord Bot guide:
+// https://discord.foxbot.me/stable/guides/voice/sending-voice.html
 public class AudioService
 {
     private readonly ConcurrentDictionary<ulong, IAudioClient> ConnectedChannels = new ConcurrentDictionary<ulong, IAudioClient>();
