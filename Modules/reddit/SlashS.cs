@@ -6,16 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using RedditSharp;
 using RedditSharp.Things;
-using JackBotV2;
 using System.IO;
 using System.Security.Authentication;
 using Discord.Commands;
-using static JackBot.Program;
+using static JackBotV2.Program;
 
 //Code based on ddevault's RedditSharp documentation:
 //https://github.com/ddevault/RedditSharp
 
-namespace JackBotV2.Modules
+namespace JackBotV2.Modules.reddit
 {
     public class SlashS : ModuleBase<ICommandContext>
     {
@@ -73,45 +72,7 @@ namespace JackBotV2.Modules
         [Command("redscrape", RunMode = RunMode.Async)]
         public async Task SpiderAsync(string subreddit, int amount, [Remainder]string word)
         {
-            while (!StaticVals.authenticated)
-            {
-                Console.Write("Username: ");
-                var username = "JackBotV2";
-                Console.Write("Password: ");
-                var password = GetLine("../redditpass.txt");
-                try
-                {
-                    Console.WriteLine("Logging in...");
-                    StaticVals.reddit = new Reddit(username, password);
-                    StaticVals.authenticated = StaticVals.reddit.User != null;
-                }
-                catch (AuthenticationException)
-                {
-                    Console.WriteLine("Incorrect login.");
-                    StaticVals.authenticated = false;
-                }
-                Console.WriteLine("Reddit logon successful!");
-            }
-            //await getPosts(subreddit, amount);
             await getComments(subreddit, amount, word);
-        }
-
-        public static string GetLine(string path)
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(path))
-                {
-                    string line = sr.ReadLine();
-                    return line;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("File could not be read");
-                Console.WriteLine(e.Message);
-                return "";
-            }
         }
     }
 }

@@ -10,8 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using RedditSharp;
 using System.Security.Authentication;
+using static JackBotV2.Services.GeneralService;
+using static JackBotV2.Services.RedditService;
 
-namespace JackBot
+namespace JackBotV2
 {
     class Program
     {
@@ -39,7 +41,7 @@ namespace JackBot
                 .AddSingleton(new AudioService())
                 .BuildServiceProvider();
 
-            string botToken = GetToken("../token.txt");
+            string botToken = await GetFile("../token.txt");
 
             //event subs
             _client.Log += Log;
@@ -48,30 +50,13 @@ namespace JackBot
 
             await _client.LoginAsync(TokenType.Bot, botToken);
 
-            await _client.SetGameAsync("Darkest Dungeon");
+            await _client.SetGameAsync(await GetFile("../status.txt"));
 
             await _client.StartAsync();
 
             Console.WriteLine(_client.LoginState);
 
-            Console.Write("Username: ");
-            var username = "JackBotV2";
-            Console.WriteLine($"{username}");
-            Console.Write("Password: ");
-            var password = JackBotV2.Modules.SlashS.GetLine("../redditpass.txt");
-            Console.WriteLine($"{password}");
-            try
-            {
-                Console.WriteLine("Logging into Reddit...");
-                StaticVals.reddit = new Reddit(username, password);
-                StaticVals.authenticated = StaticVals.reddit.User != null;
-                Console.WriteLine("Reddit logon successful!");
-            }
-            catch (AuthenticationException)
-            {
-                Console.WriteLine("Incorrect login for Reddit.");
-                StaticVals.authenticated = false;
-            }
+            await RedditLoginAsync();
 
             await Task.Delay(-1);
         }
@@ -111,26 +96,6 @@ namespace JackBot
                     Console.WriteLine(result.ErrorReason);
                     await context.Channel.SendMessageAsync(result.ErrorReason);
                 }
-            }
-        }
-
-        static string GetToken(string path)
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(path))
-                {
-                    Console.WriteLine($"Getting token from {path} . . .");
-                    string line = sr.ReadLine();
-                    Console.WriteLine("Got: " + line);
-                    return line;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("File could not be read");
-                Console.WriteLine(e.Message);
-                return "";
             }
         }
     }
