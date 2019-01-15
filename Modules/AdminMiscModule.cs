@@ -93,6 +93,7 @@ namespace JackBotV2.Modules
                 await listUpdate(quotes, "../quotes.txt");
                 await ReplyAsync($"Removed '{userMessage}'");
             }
+            quotes.Clear();
         }
 
         [Command("purge", RunMode = RunMode.Async), RequireBotPermission(ChannelPermission.ManageMessages)]

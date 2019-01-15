@@ -122,6 +122,7 @@ namespace JackBotV2.Modules
                 await listUpdate(quotes, "../quotes.txt");
                 await ReplyAsync($"Added '{userMessage}'");
             }
+            quotes.Clear();
         }
 
         [Group("getinfo")]
