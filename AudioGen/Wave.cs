@@ -38,7 +38,7 @@ namespace JackBotV2.AudioGen
                 chunkSize = 16;
                 audioFormat = 1;
                 channels = 2;
-                sampleRate = 44100;
+                sampleRate = 8000;
                 bitsPersample = 16;
                 blockAlign = (ushort)((channels * bitsPersample) / 8);
                 byteRate = sampleRate * blockAlign;

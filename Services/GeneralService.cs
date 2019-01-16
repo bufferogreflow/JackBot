@@ -30,6 +30,35 @@ namespace JackBotV2.Services
             }
         }
 
+        public static async Task CheckMemeSongs()
+        {
+            DirectoryInfo directory = new DirectoryInfo("../memeSongs/");
+
+            try
+            {
+                FileInfo[] fileList = new FileInfo[0];
+
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                directory.Delete();
+            }
+        }
+
+        public static string getMemeSong()
+        {
+            int tempint = GetRandomNumber(0, 30);
+            string index = tempint.ToString();
+            string filetype = ".mp3";
+            string filename = "sad";
+            string memeSong = "../memeSongs/" + filename + index + filetype;
+            return memeSong;
+        }
+
         public static async Task<string> GetFile(string path, bool isMisc = false)
         {
             try

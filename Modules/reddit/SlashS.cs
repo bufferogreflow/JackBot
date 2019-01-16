@@ -9,7 +9,7 @@ using RedditSharp.Things;
 using System.IO;
 using System.Security.Authentication;
 using Discord.Commands;
-using static JackBotV2.Program;
+using static JackBotV2.Services.RedditService;
 
 //Code based on ddevault's RedditSharp documentation:
 //https://github.com/ddevault/RedditSharp
@@ -33,9 +33,9 @@ namespace JackBotV2.Modules.reddit
                 {
                     posts.WithImageUrl(post.Thumbnail.AbsoluteUri); //Posts might not have a thumbnail, which breaks the whole bot for some reason.
                 }
-                catch (System.Exception)
+                catch (Exception e)
                 {
-                    Console.WriteLine("Error getting post's thumbnail url");
+                    Console.WriteLine($"Error getting post's thumbnail url: {e}");
                 }
                 await Context.Channel.SendMessageAsync("", false, posts);
             }

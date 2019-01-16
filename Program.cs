@@ -8,8 +8,6 @@ using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
-using RedditSharp;
-using System.Security.Authentication;
 using static JackBotV2.Services.GeneralService;
 using static JackBotV2.Services.RedditService;
 
@@ -17,12 +15,6 @@ namespace JackBotV2
 {
     class Program
     {
-        public static class StaticVals
-        {
-            public static Reddit reddit = null;
-            public static bool authenticated = false;
-        }
-
         public static void Main(string[] args)
             => new Program().RunBotAsync().GetAwaiter().GetResult();
 
@@ -41,7 +33,7 @@ namespace JackBotV2
                 .AddSingleton(new AudioService())
                 .BuildServiceProvider();
 
-            string botToken = await GetFile("../token.txt");
+            string botToken = await GetFile("../token.txt", true);
 
             //event subs
             _client.Log += Log;

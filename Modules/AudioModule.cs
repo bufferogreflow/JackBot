@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Media;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Audio;
 using Discord.Commands;
 using static JackBotV2.Services.GeneralService;
-
+using JackBotV2.AudioGen;
 namespace JackBotV2.Modules
 {
     public class AudioModule : ModuleBase<ICommandContext>
@@ -39,15 +40,26 @@ namespace JackBotV2.Modules
         [Command("this is so sad", RunMode = RunMode.Async)]
         public async Task sadCmd()
         {
-            int tempint = GetRandomNumber(0, 30);
-            string index = tempint.ToString();
-            string filetype = ".mp3";
-            string filename = "sad";
-            string memeSong = filename + index + filetype;
+            string memeSong = getMemeSong();
             Console.WriteLine($"Loading up {memeSong}...");
             await _service.JoinAudio(Context.Guild, (Context.User as IVoiceState).VoiceChannel);
             await _service.SendAudioAsync(Context.Guild, Context.Channel, memeSong);
             await _service.LeaveAudio(Context.Guild);
+        }
+
+        [Command("beep", RunMode = RunMode.Async)]
+        public async Task beepCmd()
+        {
+            string filePath = @"C:\Users\KernelSanders\Desktop\test.wav";
+            WaveGen wave = new WaveGen(WaveType.Noise);
+            wave.Save(filePath);
+            await _service.JoinAudio(Context.Guild, (Context.User as IVoiceState).VoiceChannel);
+            await _service.SendAudioAsync(Context.Guild, Context.Channel, filePath);
+            await _service.LeaveAudio(Context.Guild);
+            //SoundPlayer player = new SoundPlayer(filePath);
+            //player.PlaySync();
+
+            wave.Save(filePath, true);
         }
 
         [Command("yt", RunMode = RunMode.Async)]
